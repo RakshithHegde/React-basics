@@ -1,37 +1,37 @@
 import React from 'react' ;
 import ReactDOM  from 'react-dom';
-//import SeasonDisplay from './SeasonDisplay';
+import SeasonDisplay from './SeasonDisplay';
 
 class App extends React.Component {
-    constructor(props) {
+   /* constructor(props) {
         super(props);
         //this is only time we assign a value directly
-        this.state = {lat: null,errorMessage:""};
-
-
+        this.state = {lat: null,errorMessage:""}; 
+    } */
+    state = {lat: null,errorMessage: ''};
+    componentDidMount() {
+       // console.log("My component is rendered to the screen");
         window.navigator.geolocation.getCurrentPosition(
-            position => {
+            position => this.setState({lat: position.coords.latitude})
                 //to update state object  we called setState
-                this.setState({lat: position.coords.latitude});
-
                 //this is wrong => this.state.lat = position.coords.latitude
-
-            },
-            error => {
-                this.setState({errorMessage: error.message})
-            }
+            ,
+            error => this.setState({errorMessage: error.message})
         );
+    }
+    componentDidUpdate() {
+        console.log("My component was just updated - it rerendered");
     }
 
     //render should be defined
     render() {
         if(this.state.errorMessage && !this.state.lat){
-            return <div style={{backgroundColor:'maroon'}}>Error: {this.state.errorMessage}</div>
+            return <h3 style={{backgroundColor:'maroon'}}>Error❎:  {this.state.errorMessage}</h3>
         }
         if(!this.state.errorMessage && this.state.lat){
-            return <div style={{backgroundColor:'orange'}}>Latitude: {this.state.lat}</div>
+            return <SeasonDisplay lat={this.state.lat}/> 
         }
-        return <div>Loading!</div>;
+        return <h3>Loading!🔄 </h3>;
     }
 };
 
