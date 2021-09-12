@@ -4,6 +4,7 @@ import axios from "axios";
 const Search = () => {
   const [term, setTerm] = useState("react");
   const [results, setResults] = useState([]);
+
   //console.log(results);
   useEffect(() => {
     const search = async () => {
@@ -30,7 +31,7 @@ const Search = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [term]);
+  }, [term, results.length]);
 
   const renderedResults = results.map((result) => {
     return (
