@@ -13,7 +13,9 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     };
     document.body.addEventListener("click", onBodyClick, { capture: true });
     return () => {
-      document.body.removeEventListener("click", onBodyClick);
+      document.body.removeEventListener("click", onBodyClick, {
+        capture: true,
+      });
     };
   }, []);
 
